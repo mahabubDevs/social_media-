@@ -1,0 +1,5 @@
+username: jihowo1336,
+password: wa0fQoJNGadKALXc,
+
+
+link: mongodb+srv://jihowo1336:wa0fQoJNGadKALXc@cluster0.cgrecp3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
