@@ -24,7 +24,30 @@ export default {
       pink_100: "var(--pink-100)" ,
       cryan_100: "var(--cryan-100)" 
     },
-    extend: {},
+    fontFamily:{
+      gilroy: ['Gilroy Regular'],
+      gilroyBold:['Gilroy Bold'],
+      gilroySemibold:['Gilroy SemiBold'],
+      gilroyLight:['Gilroy Light'],
+      gilroyExtraBold:['Gilroy ExtraBold'],
+      gilroyBlack:['Gilroy Black'],
+      gilroyMedium:['Gilroy Medium'],
+      
+    },
+    extend: {
+      screens:{
+        xs:"320px",
+        sm:"576px",
+        md:"768px",
+        lg:"992px",
+        xl:"1200px",
+        "2xl": "1400px",
+        "3xl": "1620px"
+      },
+      container:{
+        center:true
+      }
+    },
   },
   plugins: [],
 }
