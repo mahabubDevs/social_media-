@@ -82,8 +82,9 @@ exports.newUser = async (req,res)=>{
 
         const emailToken = jwToken({ id: user._id.toString() }, "30m")
         const url = `${process.env.BASE_URL}/activate/${emailToken}`
+
         sendVerifiedEmail(user.email,user.fname,url)
-      const token = jwToken({ id: user._id.toString() }, "7d")
+        const token = jwToken({ id: user._id.toString() }, "7d")
         res.send(
             {
                 id: user._id,
@@ -108,7 +109,8 @@ exports.verifiedUser = async (req,res)=>{
     try {
         const {token} = req.body
         const user = jwt.verify(token,process.env.SECRET_TOKEN)
-        const check = await Users.findById(user,id)
+        const check = await Users.findById(user.id)
+        console.log(token)
         
         if(check.verified === true){
             return res.status(400).json({
@@ -122,6 +124,42 @@ exports.verifiedUser = async (req,res)=>{
         }
 
     } catch (err) {
+        res.status(404).json({
+            message: err.message
+        })
+    }
+}
+
+exports.login = async(req,res) =>{
+    try{
+        const {email,password} = req.body
+        const user = await Users.findOne({email})
+        if(!user){
+            return res.status(400).json({
+                message: "The email address you entered is not connected to an account"
+            })
+        }
+        const check = await bcrypt.compare(password,user.password)
+        if(!check){
+            return res.status(400).json({
+                message: "Invalid credentials. Please try again"
+            })
+        }
+        const token = jwToken({id:user._id.toString()},'7d')
+        res.send(
+            {
+                id: user._id,
+                username: user.username,
+                profilepic: user.profilepic,
+                fname: user.fname,
+                lname: user.lname,
+                token: token,
+                verified: user.verified,
+                message: "Login  success! Please activate your email to start"
+            }
+        )
+
+    }catch(error){
         res.status(404).json({
             message: err.message
         })

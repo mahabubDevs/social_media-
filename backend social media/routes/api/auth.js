@@ -1,9 +1,10 @@
 const express = require("express")
 const router = express.Router()
-const {newUser,verifiedUser} = require("../../controllers/userControllers")
+const {newUser,verifiedUser,login} = require("../../controllers/userControllers")
 
 
 router.post('/', newUser)
-router.post('/active', verifiedUser)
+router.post('/activate', verifiedUser)
+router.post('/login', login)
 
 module.exports = router 
