@@ -4,6 +4,7 @@ import {useFormik} from "formik";
 import { signUp } from "../../validation";
 import DateofBirth from "./DateofBirth";
 import Gender from "./Gender";
+import { useState } from "react";
 
 import {useAddUserMutation} from '../../features/api/authApi'
 
@@ -16,46 +17,72 @@ const initialState = {
     email: "",
     password: "",
     bYear: new Date().getFullYear(),
-    bMonth: new Date().getMonth(),
-    bDay: new Date().getDate,
+    bMonth: new Date().getMonth() + 1,
+    bDay: new Date().getDate(),
     gender: "",
 }
 
 const RegistrationFrom = () => {
+    const [ageError,setAgeError] = useState("");
 
     const [addUser] = useAddUserMutation();
+
     const registration = async()=>{
         const signUpMutation = await addUser({
             fname: formik.values.fname,
             lname: formik.values.lname,
             email: formik.values.email,
             password: formik.values.password,
-            bYear: new Date().getFullYear(),
-            bMonth: new Date().getMonth(),
-            bDay: new Date().getDate,
+            bYear: formik.values.bYear,
+            bMonth: formik.values.bMonth,
+            bDay: formik.values.bDay,
             gender: formik.values.gender,
-        })
-        console.log("ami kaj kori nai")
-        console.log(signUpMutation.data);
+        });
+        // console.log("ami kaj kori nai")
+        console.log(signUpMutation.error);
     }
 
         const formik = useFormik({
             initialValues:initialState,
             validationSchema:signUp,
             onSubmit:()=>{
-                console.log("hello sign up")
+                const currentDate = new Date();
+                const picked_Date = new Date(
+                    formik.values.bYear,
+                    formik.values.bMonth -1,
+                    formik.values.bDay
+                );
+                const adult = new Date(1970 +18,0,1);
+                const tooOld = new Date(1970 + 70,0,1);
+                if(currentDate -picked_Date < adult){
+                 return   setAgeError("under you are not 18")
+                }else if(currentDate-picked_Date > tooOld){
+                 return   setAgeError("more than 70");
+                }
+               
                 registration();
-            }
-        })
+
+
+                setAgeError("");
+                console.log("Submitted")
+                
+                
+            },
+        });
 
         
 const tempYears = new Date().getFullYear();
 const years = Array.from(new Array(105), (val, index) => tempYears - index);
+
+
+
 const month = Array.from(new Array(12), (val, index) => 1+ index);
 const day=()=>{
-    return new Date(formik.values.bYear,formik.values.bMonth,0).getDate()
+    return new Date(formik.values.bYear, formik.values.bMonth,0).getDate();
 };
-const getDates = Array.from(new Array(day()),(val,index)=>1+index)
+const getDates = Array.from(new Array(day()),(val,index)=>1 + index);
+
+
 
     
 
@@ -144,7 +171,10 @@ const getDates = Array.from(new Array(day()),(val,index)=>1+index)
                 {
                     errors.password && touched.password && <p className="font-gilroy text-sm text-red my-2 mx-3">{errors.password}</p>
                 }
-                <DateofBirth  formik={formik} years={years} month={month} getDates={getDates} errors={errors}/>
+                <DateofBirth  formik={formik} years={years} month={month} getDates={getDates} ageError={ageError}/>
+
+                
+               
                 <Gender formik={formik} errors={errors} touched={touched}/>
                 <div className="sm:flex justify-between items-center mt-4 sm:mt-2">
                     <button type="submit" className="px-6 py-2 bg-secondary_bg rounded-full text-white font-gilroy">Submit</button>
