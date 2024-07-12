@@ -7,3 +7,8 @@ export const signUp = Yup.object({
     password: Yup.string().min(8).required("Please Enter Password"),
     gender: Yup.string().required("Please Enter Gender"),
 })
+export const signIn = Yup.object({
+    email: Yup.string().email().required("Please Enter Valid Email"),
+    password: Yup.string().min(8).required("Please Enter Password"),
+   
+})

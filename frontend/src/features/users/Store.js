@@ -8,6 +8,7 @@ const store = configureStore({
         [authApi.reducerPath]: authApi.reducer,
         registration: authSlice
     },
+    devTools: import.meta.env.MODE !== "production",
     middleware:(getDefaultMiddlware)=> getDefaultMiddlware().concat(authApi.middleware)
 })
 export default store

@@ -1,5 +1,5 @@
 
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useFormik} from "formik";
 import { signUp } from "../../validation";
 import DateofBirth from "./DateofBirth";
@@ -7,6 +7,7 @@ import Gender from "./Gender";
 import { useState } from "react";
 
 import {useAddUserMutation} from '../../features/api/authApi'
+
 
 
 
@@ -22,10 +23,12 @@ const initialState = {
     gender: "",
 }
 
-const RegistrationFrom = () => {
+const RegistrationFrom = ({toast}) => {
     const [ageError,setAgeError] = useState("");
+    const navigate = useNavigate()
 
     const [addUser] = useAddUserMutation();
+
 
     const registration = async()=>{
         const signUpMutation = await addUser({
@@ -38,9 +41,32 @@ const RegistrationFrom = () => {
             bDay: formik.values.bDay,
             gender: formik.values.gender,
         });
+        if(signUpMutation?.data){
+            toast.success(signUpMutation?.data?.message,{
+              position:"top-right",
+              autoClose:2000,
+              hideProgressBar:true,
+              pauseOnHover:false,
+              theme:"light",
+            });
+            setTimeout(()=>{
+                navigate("/login")
+            },2000);
+          }else if (signUpMutation?.error){
+              toast.error(signUpMutation?.error?.data?.message,{
+                position:"top-right",
+                autoClose:2000,
+                hideProgressBar:true,
+                pauseOnHover:false,
+                theme:"light",
+              })
+                
+            }
         // console.log("ami kaj kori nai")
-        console.log(signUpMutation.error);
+        console.log(signUpMutation.data);
     }
+
+    
 
         const formik = useFormik({
             initialValues:initialState,
@@ -61,7 +87,11 @@ const RegistrationFrom = () => {
                 }
                
                 registration();
-
+                formik.resetForm();
+                setAgeError("");
+                // setTimeout(() => {
+                //     navigate("/login");
+                // }, 2000);
 
                 setAgeError("");
                 console.log("Submitted")
@@ -179,7 +209,7 @@ const getDates = Array.from(new Array(day()),(val,index)=>1 + index);
                 <div className="sm:flex justify-between items-center mt-4 sm:mt-2">
                     <button type="submit" className="px-6 py-2 bg-secondary_bg rounded-full text-white font-gilroy">Submit</button>
                     <p className="font-gilroy 2xl:text-base xl:text-sm mt-2 lg:mt-0 ">Already have an account? 
-                         <Link to='/' className="text-primary_color underline"> Sign In</Link>  
+                         <Link to='/login' className="text-primary_color underline"> Sign In</Link>  
                          {/* <span className="text-primary_color underline">Sign IN</span> */}
                     </p>
                 </div>
