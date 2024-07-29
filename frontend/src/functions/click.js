@@ -1,0 +1,20 @@
+import  {useEffect} from 'react';
+
+export default function OutSideClick (ref, fun){
+    useEffect(()=>{
+        let click = (e)=>{
+            if(!ref.current || ref.current.contains(e.target)){
+                return false;
+            }
+            fun();
+        };
+
+        document.addEventListener("mousedown",click);
+        document.addEventListener("touchstart",click);
+
+        return()=>{
+            document.addEventListener("mousedown",click);
+            document.addEventListener("touchstart",click);
+        };
+    },[ref,fun])
+}

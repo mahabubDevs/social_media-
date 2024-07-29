@@ -1,10 +1,15 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { SearchIcon } from "../../../../svg/SearchIcon"
 import SearchBox from "./SearchBox";
+import OutSideClick from "../../../../functions/click";
 
 
 const Header = () => {
     const [show, setShow] = useState(false);
+    const clickOutSide = useRef(null);
+    OutSideClick(clickOutSide,()=>{
+      setShow(false);
+    })
   return (
     <div className="flex items-center justify-between">
       <div className="font-gilroyBold text-2xl text-black">Feeds</div>
@@ -18,7 +23,7 @@ const Header = () => {
                 <input type="text" placeholder="Search" className="focus:outline-none font-gilroy text-base" />
             </div>
         </div>
-        <div className="absolute -top-7 left-[-27px]">
+        <div className="absolute -top-7 left-[-27px]" ref={clickOutSide}>
             {show && <SearchBox/>}
         </div>
     </div>

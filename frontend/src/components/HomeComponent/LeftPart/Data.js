@@ -7,22 +7,27 @@ import { Settings } from "../../../svg/Settings";
 export const LeftData = [
     {
         icon: NewsFeed,
-        title: "News Feed"
+        title: "News Feed",
+        to:"/"
     },
     {
         icon: Messages,
-        title: "Messages"
+        title: "Messages",
+        to:"/"
     },
     {
         icon: Friends,
-        title: "News Feed"
+        title: "News Feed",
+        to:"/"
     },
     {
         icon: Media,
-        title: "Friends"
+        title: "Friends",
+        to:"/"
     },
     {
         icon: Settings,
         title: "Settings"
+        
     }
 ]
