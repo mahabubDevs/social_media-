@@ -35,7 +35,7 @@ const Header = () => {
                   <input type="text" placeholder="Search" className="focus:outline-none font-gilroy text-base w-full" />
               </div>
           </div>
-          <div className="absolute -top-7 -right-6 xl:left-[-27px] " ref={clickOutSide}>
+          <div className="absolute -top-7 -right-6 xl:left-[-27px] z-10" ref={clickOutSide}>
               {show && <SearchBox/>}
           </div>
       </div>
