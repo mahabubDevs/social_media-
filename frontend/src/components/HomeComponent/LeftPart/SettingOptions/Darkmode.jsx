@@ -2,12 +2,12 @@ import { BackIcon } from "../../../../svg/backIcon"
 import { Moon } from "../../../../svg/Moon"
 
 
-const Darkmode = () => {
+const Darkmode = ({setVisiblity}) => {
   return (
     <>
         <div className="bg-white w-[300px] shadow-md rounded-md p-4">
             <div className="flex items-center gap-x-5 mb-4">
-                <div className="hover:text-secondary_color cursor-pointer transition-all ease-linear duration-75">
+                <div className="hover:text-secondary_color cursor-pointer transition-all ease-linear duration-75" onClick={()=>setVisiblity(false)}>
                     <BackIcon/>
                 </div>
                 <h4 className="font-gilroyBold text-lg text-black">

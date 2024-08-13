@@ -6,12 +6,16 @@ import Home from './pages/home'
 import Login from './pages/login'
 import NotLoggedInUser from './privateRouter/NotLoggedInUser'
 import LoggedInUser from './privateRouter/LoggedInUser'
+import RootLayout from "./components/RootLayout"
+import 'swiper/css';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route element={<LoggedInUser/>}>
-        <Route path='/' element={<Home/>}></Route>
+        <Route element={<RootLayout />}>
+          <Route path='/' element={<Home/>}></Route>
+        </Route>
       </Route>
       <Route path='/' element={<NotLoggedInUser/>}>
           <Route path='/registration' element={<Registration/>}></Route>

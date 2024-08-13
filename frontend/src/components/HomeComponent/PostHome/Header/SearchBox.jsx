@@ -10,7 +10,7 @@ const SearchBox = () => {
         inputBox.current.focus();
     },[]);
   return (
-    <div className=' left-[-27px] w-[389px] p-7 box-border bg-white shadow-md rounded-md min-h-[400px] max-h-[70vh]'>
+    <div className='w-[300px]   left-[-27px] lg:w-[334px] p-7 box-border bg-white shadow-md rounded-md min-h-[400px] max-h-[70vh]'>
       <div className="flex items-center gap-x-3 border-secondary_color border  py-[10px] px-4 rounded-full" >
             {iconVisible && (
                 <div className="text-secondary_color cursor-pointer" onClick={()=>inputBox.current.focus()}>

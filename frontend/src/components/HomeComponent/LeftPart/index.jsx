@@ -6,7 +6,7 @@ import LeftProfile from "./LeftProfile"
 const LeftPart = () => {
   return (
     <>
-      <div>
+      <div className="lg:mb-8">
       <LeftProfile/>
       </div>
       <div>

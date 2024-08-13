@@ -7,7 +7,7 @@ const SettingOptions = () => {
   const [visiblity,setVisiblity] = useState(false);
 
   if(visiblity){
-    return <Darkmode/>;
+    return <Darkmode setVisiblity={setVisiblity}/>;
   }
 
   return (

@@ -1,25 +1,32 @@
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import SettingOptions from "./SettingOptions";
+import OutSideClick from "../../../functions/click";
 
 
 const LeftHomeData = ({data}) => {
   const [show,setShow] = useState(false);
 
+  const clickOutSide = useRef(null);
   const ItemIcon = data.icon;
+
+  OutSideClick(clickOutSide,()=>{
+    setShow(false);
+  });
+
   const SettingSeparation = data.title === "Settings" &&(
     <>
       <div className="relative">
-          <div  className="flex items-center gap-x-6 mb-7 hover:bg-black py-3 px-6 rounded-full cursor-pointer group transition-all ease-linear duration-100" onClick={()=>setShow(true)}>
-          <div className="group-hover:text-white transition-all ease-linear duration-100">
+          <div  className={`flex w-10 h-10 xl:w-auto xl:h-auto justify-center xl:justify-normal items-center xl:items-center xl:gap-x-6 lg:mb-5 xl:mb-7 hover:bg-black xl:py-3 xl:px-6 rounded-full cursor-pointer group transition-all ease-linear duration-100 ${show && 'bg-black'}`} onClick={()=>setShow(true)}>
+          <div className={`group-hover:text-white transition-all ease-linear duration-100 ${show && "text-white"}`}>
             <ItemIcon/>
           </div>
-          <div>
-            <p className="font-gilroyMedium text-lg text-black group-hover:text-white transition-all ease-linear duration-100">{data.title}</p>
+          <div className="hidden xl:block">
+            <p className={`font-gilroyMedium text-xl text-black group-hover:text-white transition-all ease-linear duration-100 ${show && "text-white"}`}>{data.title}</p>
           </div>
         </div>
-        <div className="absolute top-16 left-0 ">
+        <div className="absolute top-12 -left-2/4 -translate-x-2/4 xl:top-16 lg:left-36  " ref={clickOutSide}>
         {show && <SettingOptions/>}
         </div>
       </div>
@@ -30,12 +37,12 @@ const LeftHomeData = ({data}) => {
   return (
     <>
     {SettingSeparation ? (SettingSeparation):(
-      <NavLink to={data.to} className="flex items-center gap-x-6 mb-7 hover:bg-black py-3 px-6 rounded-full cursor-pointer group transition-all ease-linear duration-100">
+      <NavLink to={data.to} className="flex w-10 h-10 xl:w-auto xl:h-auto justify-center xl:justify-normal items-center xl:items-center xl:gap-x-6 xl:mb-7 hover:bg-black xl:py-3 xl:px-6 rounded-full cursor-pointer group transition-all ease-linear duration-100">
       <div className="group-hover:text-white transition-all ease-linear duration-100">
         <ItemIcon/>
       </div>
-      <div>
-        <p className="font-gilroyMedium text-lg text-black group-hover:text-white transition-all ease-linear duration-100">{data.title}</p>
+      <div className="hidden xl:block">
+        <p className="font-gilroyMedium text-xl text-black group-hover:text-white transition-all ease-linear duration-100">{data.title}</p>
       </div>
       </NavLink>
     )}
