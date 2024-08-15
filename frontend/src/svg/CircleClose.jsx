@@ -12,7 +12,7 @@ export const CircleCloseIcon = () => {
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
-        strokeLinejoin="round"
+       strokeLinejoin="round"
       />
       <path
         d="M9.17 14.83L14.83 9.17"

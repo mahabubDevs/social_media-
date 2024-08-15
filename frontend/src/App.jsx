@@ -8,6 +8,7 @@ import NotLoggedInUser from './privateRouter/NotLoggedInUser'
 import LoggedInUser from './privateRouter/LoggedInUser'
 import RootLayout from "./components/RootLayout"
 import 'swiper/css';
+import CreatePostPopUp from './components/HomeComponent/PostHome/createPostPopUp'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,7 @@ function App() {
 
   return (
     <>
+      <CreatePostPopUp/>
      <RouterProvider router={router} />
     </>
   )
