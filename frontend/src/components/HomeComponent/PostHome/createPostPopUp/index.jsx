@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CircleCloseIcon } from "../../../../svg/CircleClose";
 import AddPost from "./AddPost";
-import Feeling from "../../../../svg/Feeling";
-import EmojiPicker from "emoji-picker-react";
+import EmojiPickers from "./EmojiPickers";
 
 const CreatePostPopUp = () => {
-  const [picker,setPicker] = useState(false)
+  
+  const [text ,setText] = useState("")
+  const textRef = useRef(null)
+ 
+
+ 
+  
   return (
     <div className="absolute top-0 left-0 w-full bg-blur h-screen z-20 flex justify-center items-center">
       <div className="w-[30%] bg-white shadow-md">
@@ -25,7 +30,13 @@ const CreatePostPopUp = () => {
               </h4>
               </div>
             <div className="mt-5">
-              <textarea placeholder="What's up say something"
+            <textarea
+              ref={textRef}
+              maxLength={150}
+              value={text}
+              onChange={(e) => setText(e.target.value)
+
+              } placeholder="What's up say something"
                 className="w-full min-h-24 outline-none p-2 font-gilroyMedium text-base" />
               
           </div>
@@ -33,17 +44,7 @@ const CreatePostPopUp = () => {
             <div className="w-10 h-10 bg-gradient-to-r from-red to-purple_100 rounded-md cursor-pointer">
               
               </div>
-            <div className="cursor-pointer relative">
-              <div onClick={()=>setPicker((prev)=> !prev)}>
-                  <Feeling/>
-              </div>
-              {picker && (
-                <div className="absolute -top-[460px] -left-[315px]">
-                  <EmojiPicker/>
-                </div>
-
-              )}
-              </div>
+            <EmojiPickers text={text} setText={setText} textRef={textRef} />
           </div>
           <div>
             <AddPost/>
