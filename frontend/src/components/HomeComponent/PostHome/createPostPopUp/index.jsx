@@ -2,11 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { CircleCloseIcon } from "../../../../svg/CircleClose";
 import AddPost from "./AddPost";
 import EmojiPickers from "./EmojiPickers";
+import ImageViewer from "./ImageViewer";
 
 const CreatePostPopUp = () => {
   
-  const [text ,setText] = useState("")
+  const [text, setText] = useState("")
+  const [imgbox, setImgbox] = useState(false)
   const textRef = useRef(null)
+  const [imageShow, setImageShow] = useState([])
  
 
  
@@ -18,7 +21,7 @@ const CreatePostPopUp = () => {
           <h3 className="font-gilroyBold text-lg text-black text-center">
             Create Post
           </h3>
-          <div className="absolute top-1 right-2">
+          <div className="absolute top-1 right-2" >
             <CircleCloseIcon />
           </div>
         </div>
@@ -28,27 +31,33 @@ const CreatePostPopUp = () => {
               <h4 className="font-gilroyBold text-base text-black">
                 Md Mahabub Rahman
               </h4>
+          </div>
+          {
+            !imgbox ? (
+              <>
+                <EmojiPickers text={text} setText={setText} textRef={textRef} />
+              <div>
+                  <AddPost setImgbox={setImgbox} imgbox={ imgbox} />
               </div>
-            <div className="mt-5">
-            <textarea
-              ref={textRef}
-              maxLength={150}
-              value={text}
-              onChange={(e) => setText(e.target.value)
-
-              } placeholder="What's up say something"
-                className="w-full min-h-24 outline-none p-2 font-gilroyMedium text-base" />
-              
-          </div>
-          <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-red to-purple_100 rounded-md cursor-pointer">
-              
+              </>
+            ) : (
+                <>
+                  <ImageViewer
+                    text={text}
+                    setText={setText}
+                    textRef={textRef}
+                    imageShow={imageShow}
+                    setImageShow={setImageShow}
+                    setImgbox = {setImgbox}
+                  />
+                  <div>
+                  
+                  <AddPost setImgbox={setImgbox} imgbox={ imgbox} />
               </div>
-            <EmojiPickers text={text} setText={setText} textRef={textRef} />
-          </div>
-          <div>
-            <AddPost/>
-          </div>
+                </>
+            )
+          }
+             
           <div className="mt-3">
             <button className="w-full bg-[#e6e5e5] hover:text-white hover:bg-black p-2 font-gilroyExtraBold text-black text-base rounded-md">
               Post
